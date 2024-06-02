@@ -119,7 +119,9 @@ const CreateCharacter = () => {
                                 <select
                                     className="input"
                                     value={selectedCampaignId}
-                                    onChange={(e) => setSelectedCampaignId(e.target.value)}
+                                    onChange={(e) =>
+                                        setSelectedCampaignId(e.target.value)
+                                    }
                                 >
                                     <option value="">Select Campaign</option>
                                     {campaigns.map((campaign) => (
@@ -135,31 +137,41 @@ const CreateCharacter = () => {
                                     placeholder="Nama Karakter"
                                     name="nama_campaign"
                                     value={namaCampaign}
-                                    onChange={(e) => setNamaCampaign(e.target.value)}
+                                    onChange={(e) =>
+                                        setNamaCampaign(e.target.value)
+                                    }
                                 />
                                 <Textarea
                                     placeholder="Karakter Deskripsi"
                                     name="deskripsi_campaign"
                                     value={deskripsiCampaign}
-                                    onChange={(e) => setDeskripsiCampaign(e.target.value)}
+                                    onChange={(e) =>
+                                        setDeskripsiCampaign(e.target.value)
+                                    }
                                 />
                                 <Input
                                     placeholder="Karakter Class"
                                     name="class_campaign"
                                     value={classCampaign}
-                                    onChange={(e) => setClassCampaign(e.target.value)}
+                                    onChange={(e) =>
+                                        setClassCampaign(e.target.value)
+                                    }
                                 />
                                 <Input
                                     placeholder="Karakter Subclass"
                                     name="subclass_campaign"
                                     value={subclassCampaign}
-                                    onChange={(e) => setSubClassCampaign(e.target.value)}
+                                    onChange={(e) =>
+                                        setSubClassCampaign(e.target.value)
+                                    }
                                 />
                                 <Input
                                     placeholder="Karakter Background"
                                     name="background_campaign"
                                     value={backgroundCampaign}
-                                    onChange={(e) => setBackgroundCampaign(e.target.value)}
+                                    onChange={(e) =>
+                                        setBackgroundCampaign(e.target.value)
+                                    }
                                 />
                                 <label htmlFor="phcp">
                                     <div className="bg-sky-600 py-2 px-1 text-white ">

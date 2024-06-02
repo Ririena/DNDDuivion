@@ -8,7 +8,41 @@ import { Divider, Image } from "@nextui-org/react";
 export default function CampaignId() {
     const [campaignData, setCampaignData] = useState(null);
     const [image, setImage] = useState(null);
+    const [characters, setCharacters] = useState([]);
     const { campaignId } = useParams();
+
+    useEffect(() => {
+        async function fetchCharacterData() {
+            try {
+                const { data, error } = await supabase
+                    .from("characters")
+                    .select("*")
+                    .eq("id_campaign", campaignId);
+                if (error) {
+                    console.error(error.message);
+                } else {
+                    const updatedData = await Promise.all(
+                        data.map(async (character) => {
+                            const { data: imageData } = await supabase.storage
+                                .from("picture/images")
+                                .getPublicUrl(character.karakter_photo);
+
+                            return {
+                                ...character,
+                                imageUrl: imageData.publicUrl,
+                            };
+                        })
+                    );
+                    setCharacters(updatedData);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        if (campaignId) {
+            fetchCharacterData();
+        }
+    }, [campaignId]);
 
     useEffect(() => {
         async function fetchCampaignData() {
@@ -91,9 +125,42 @@ export default function CampaignId() {
                     </Card>
                 </div>
                 <div className="flex justify-center mt-8">
-                    <Card className="max-w-full w-full sm:w-[800px] p-4">
-                        <h1 className="text-center">Characters List</h1>
-                    </Card>
+                    <div className="max-w-full w-full sm:w-[800px]">
+                        <h1 className="text-center text-3xl font-bold mb-4">
+                            Characters List
+                        </h1>
+                        <Divider className="mb-4" />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {characters.map((character) => (
+                                <Card key={character.id} className="p-4 bg-white shadow-lg rounded-lg">
+                                    <div className="flex justify-center items-center mb-4">
+                                        <Image
+                                            src={
+                                                character.imageUrl
+                                                    ? character.imageUrl
+                                                    : "No image"
+                                            }
+                                            alt="Character Image"
+                                            width={200}
+                                            height={200}
+                                            className="rounded-full"
+                                        />
+                                    </div>
+                                    <div className="text-center">
+                                        <h1 className="text-lg font-bold mb-2">
+                                            {character.karakter_nama}
+                                        </h1>
+                                        <p className="text-sm text-gray-500 mb-2">
+                                            {character.class} - {character.subclass}
+                                        </p>
+                                        <p className="text-gray-700">
+                                            {character.description}
+                                        </p>
+                                    </div>
+                                </Card>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>

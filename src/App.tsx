@@ -9,6 +9,7 @@ import Campaign from "./page/Campaign";
 import CreateCampaign from "./page/Function/CreateCampaign";
 import CampaignId from "./page/CampaignId";
 import CreateCharacter from "./page/Function/CreateCharacter";
+import CreateLore from "./page/Function/CreateLore";
 function App() {
     const withLayout = (LayoutComponent: any, ChildComponent: any) => {
         return (props: any) => (
@@ -30,6 +31,7 @@ function App() {
                         <Route path=":campaignId">
                             <Route index element={<CampaignId />} />
                             <Route path="create/character" element={<CreateCharacter/>}/>
+                            <Route path="create/lore" element={<CreateLore/>}/>
                         </Route>
                     </Route>
                     <Route
